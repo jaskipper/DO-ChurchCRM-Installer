@@ -40,4 +40,4 @@ Answer the questions as they are asked, and in the LetsEncrypt Setup, I recommen
 
 Once finalized, you can test your ChurchCRM installation by going to your domain. (ex. https://mychurch.com, https://crm.mychurch.com)
 
-You can find more information at ChurchCRM's website (http://churchcrm.io), their GitHub account (https://github.com/ChurchCRM/CRM).
+You can find more information at ChurchCRM's website (http://churchcrm.io) and their GitHub account (https://github.com/ChurchCRM/CRM).
