@@ -11,9 +11,9 @@ apt --yes install unzip jq
 if (curl -sOL "$(jq -r ".assets[] | .browser_download_url" < <( curl -s "https://api.github.com/repos/churchCRM/CRM/releases/latest" ))"); then
   echo "Downloaded Successfully!"
   basename=$(basename ChurchCRM-*)
-  mv $basename /var/www
-  unzip /var/www/$basename
-  rm /var/www/$basename
+  crmzip="${ChurchCRM-%.zip}"
+  unzip $crmzip -d /var/www
+  rm $crmzip
 else
   echo -e "ChurchCRM was \e[31mNOT\e[0m able to Download Successfully. I will go ahead and install all of the nessesary depencencies in order to allow it to run once it is installed successfully. You can try running this script again by changing directories into the 'install-files' directory and running '\e[31m./churchcrm\e[0m' If it continues to fail, you have several other options.
 
