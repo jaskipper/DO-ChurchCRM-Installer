@@ -3,6 +3,10 @@ echo ""
 echo "#   Installing Latest ChurchCRM and Dependencies    #"
 echo ""
 
+DEBIAN_FRONTEND=noninteractive apt
+apt --yes update
+apt --yes install unzip jq
+
 #Download Latest Stable release
 if (curl -sOL "$(jq -r ".assets[] | .browser_download_url" < <( curl -s "https://api.github.com/repos/churchCRM/CRM/releases/latest" ))"); then
   echo "Downloaded Successfully!"
