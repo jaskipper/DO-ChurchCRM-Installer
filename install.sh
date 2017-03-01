@@ -45,6 +45,22 @@ if [ "" == "$PKG_OK" ]; then
   sudo apt --yes install $PKG_NAME
 fi
 
+PKG_NAME=php7.0-xml
+PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $PKG_NAME|grep "install ok installed")
+echo Checking for $PKG_NAME: $PKG_OK
+if [ "" == "$PKG_OK" ]; then
+  echo "No $PKG_NAME. Setting up $PKG_NAME."
+  sudo apt --yes install $PKG_NAME
+fi
+
+PKG_NAME=php-curl
+PKG_OK=$(dpkg-query -W --showformat='${Status}\n' $PKG_NAME|grep "install ok installed")
+echo Checking for $PKG_NAME: $PKG_OK
+if [ "" == "$PKG_OK" ]; then
+  echo "No $PKG_NAME. Setting up $PKG_NAME."
+  sudo apt --yes install $PKG_NAME
+fi
+
 echo ""
 echo "#       Creating ChurchCRM User and Database        #"
 echo ""
@@ -129,6 +145,11 @@ echo "sql_mode=IGNORE_SPACE,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_Z
 service mysql restart
 
 echo "Finished ChurchCRM Database setup successfully"
+
+sed -i "s/post_max_size\ =\ 8M/post_max_size\ =\ 30M/g" /etc/php/7.0/apache2/php.ini
+sed -i "s/upload_max_filesize\ =\ 2M/upload_max_filesize\ =\ 30M/g" /etc/php/7.0/apache2/php.ini
+sed -i "s/memory_limit\ =\ 128M/memory_limit\ =\ 256M/g" /etc/php/7.0/apache2/php.ini
+sed -i "s/max_execution_time\ =\ 30/max_execution_time\ =\ 60/g" /etc/php/7.0/apache2/php.ini
 
 echo "Setting up ChurchCRM Config file"
 cp /var/www/churchcrm/Include/Config.php.example /var/www/churchcrm/Include/Config.php
