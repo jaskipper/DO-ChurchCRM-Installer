@@ -11,14 +11,9 @@ apt --yes install unzip jq
 if (curl -sOL "$(jq -r ".assets[] | .browser_download_url" < <( curl -s "https://api.github.com/repos/churchCRM/CRM/releases/latest" ))"); then
   echo "Downloaded Successfully!"
   basename=$(basename ChurchCRM-*)
-  mv $basename /tmp
-  unzip /tmp/$basename -d /tmp
-  rm /tmp/$basename
-  rm -R /var/www/churchcrm
-  mv /tmp/churchcrm /var/www
-  chown -R www-data:www-data /var/www/churchcrm
-  chmod -R 755 /var/www/churchcrm
-  find /var/www/churchcrm/. -type f -exec chmod 644 {} +
+  mv $basename /var/www
+  unzip /var/www/$basename
+  rm /var/www/$basename
 else
   echo -e "ChurchCRM was \e[31mNOT\e[0m able to Download Successfully. I will go ahead and install all of the nessesary depencencies in order to allow it to run once it is installed successfully. You can try running this script again by changing directories into the 'install-files' directory and running '\e[31m./churchcrm\e[0m' If it continues to fail, you have several other options.
 
@@ -149,7 +144,9 @@ chown www-data:www-data /var/www/churchcrm/Include/Config.php
 
 export INSTALL_LOC="/var/www/churchcrm"
 
-chmod -R 644 $INSTALL_LOC
+chown -R www-data:www-data $INSTALL_LOC
+chmod -R 755 $INSTALL_LOC
+find $INSTALL_LOC/. -type f -exec chmod 644 {} +
 
 git clone https://github.com/jaskipper/DO-ssl-setup.git
 
