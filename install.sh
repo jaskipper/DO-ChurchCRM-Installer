@@ -147,7 +147,9 @@ sed -i "s/||URL||//g" /var/www/churchcrm/Include/Config.php
 sed -i "s/||ROOT_PATH||//g" /var/www/churchcrm/Include/Config.php
 chown www-data:www-data /var/www/churchcrm/Include/Config.php
 
-export INSTALL_LOC="/var/www/ChurchCRM"
+export INSTALL_LOC="/var/www/churchcrm"
+
+chmod -R 644 $INSTALL_LOC
 
 git clone https://github.com/jaskipper/DO-ssl-setup.git
 
